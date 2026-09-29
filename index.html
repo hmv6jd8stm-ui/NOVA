@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NOVA — Assistant intelligent</title>
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #050812;
+    color: white;
+}
+
+/* NAVIGATION */
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 70px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 7%;
+
+    background: rgba(5,8,18,0.8);
+    backdrop-filter: blur(15px);
+
+    border-bottom: 1px solid #ffffff12;
+
+    z-index: 1000;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    font-size: 23px;
+    font-weight: bold;
+}
+
+.logoIcon {
+    width: 38px;
+    height: 38px;
+
+    border-radius: 11px;
+
+    display: grid;
+    place-items: center;
+
+    background: linear-gradient(
+        135deg,
+        #4f8cff,
+        #795cff
+    );
+
+    box-shadow:
+        0 0 25px #4f8cff66;
+}
+
+nav a {
+    color: #aebbd0;
+    text-decoration: none;
+
+    margin-left: 30px;
+
+    transition: 0.2s;
+}
+
+nav a:hover {
+    color: white;
+}
+
+/* HERO */
+
+.hero {
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 100px 20px 60px;
+
+    background:
+        radial-gradient(
+            circle at 50% 40%,
+            #244d9b33,
+            transparent 40%
+        );
+}
+
+.heroContent {
+    max-width: 900px;
+}
+
+.heroLogo {
+    width: 120px;
+    height: 120px;
+
+    margin: auto auto 30px;
+
+    border-radius: 35px;
+
+    display: grid;
+    place-items: center;
+
+    font-size: 65px;
+    font-weight: bold;
+
+    background:
+        linear-gradient(
+            135deg,
+            #4f8cff,
+            #795cff
+        );
+
+    box-shadow:
+        0 0 80px #4f8cff66;
+}
+
+h1 {
+    font-size: clamp(55px, 9vw, 100px);
+
+    margin-bottom: 15px;
+
+    letter-spacing: -5px;
+}
+
+.gradient {
+    background:
+        linear-gradient(
+            90deg,
+            #6ea0ff,
+            #a278ff
+        );
+
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.hero p {
+    color: #aebbd0;
+
+    font-size: 20px;
+
+    line-height: 1.6;
+
+    max-width: 650px;
+
+    margin: auto;
+}
+
+.buttons {
+    margin-top: 35px;
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 15px;
+
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 15px 25px;
+
+    border-radius: 12px;
+
+    text-decoration: none;
+
+    font-weight: bold;
+
+    transition: 0.2s;
+}
+
+.primary {
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #4f8cff,
+            #765cff
+        );
+
+    box-shadow:
+        0 10px 35px #4f8cff33;
+}
+
+.secondary {
+    color: white;
+
+    background: #131d31;
+
+    border: 1px solid #263653;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+}
+
+/* SECTIONS */
+
+section {
+    padding: 110px 8%;
+}
+
+.sectionTitle {
+    text-align: center;
+
+    font-size: 42px;
+
+    margin-bottom: 15px;
+}
+
+.sectionDescription {
+    text-align: center;
+
+    color: #8fa1bd;
+
+    max-width: 650px;
+
+    margin: auto auto 60px;
+
+    line-height: 1.6;
+}
+
+/* FEATURES */
+
+.features {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(220px, 1fr)
+        );
+
+    gap: 20px;
+
+    max-width: 1100px;
+
+    margin: auto;
+}
+
+.card {
+    padding: 28px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #101a2c,
+            #0b1220
+        );
+
+    border: 1px solid #ffffff10;
+
+    border-radius: 20px;
+
+    transition: 0.25s;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+
+    border-color: #4f8cff55;
+}
+
+.cardIcon {
+    font-size: 35px;
+
+    margin-bottom: 18px;
+}
+
+.card h3 {
+    margin-bottom: 10px;
+}
+
+.card p {
+    color: #8fa1bd;
+
+    line-height: 1.6;
+}
+
+/* DEMO */
+
+.demo {
+    max-width: 950px;
+
+    margin: auto;
+
+    background: #0d1627;
+
+    border: 1px solid #263653;
+
+    border-radius: 22px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 30px 100px #0008;
+}
+
+.demoHeader {
+    padding: 15px 20px;
+
+    background: #111d31;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+.dot {
+    width: 11px;
+    height: 11px;
+
+    border-radius: 50%;
+
+    background: #4f8cff;
+}
+
+.demoBody {
+    padding: 30px;
+
+    min-height: 300px;
+}
+
+.message {
+    max-width: 650px;
+
+    padding: 15px 18px;
+
+    margin-bottom: 15px;
+
+    border-radius: 14px;
+
+    line-height: 1.5;
+}
+
+.nova {
+    background: #16243b;
+}
+
+.user {
+    margin-left: auto;
+
+    background: #1b3762;
+}
+
+/* DOWNLOAD */
+
+.downloadSection {
+    text-align: center;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #21478c22,
+            transparent 60%
+        );
+}
+
+.downloadBox {
+    max-width: 800px;
+
+    margin: auto;
+
+    padding: 60px 30px;
+
+    background: #0d1627;
+
+    border:
+        1px solid
+        #263653;
+
+    border-radius: 25px;
+}
+
+.downloadBox h2 {
+    font-size: 42px;
+
+    margin-bottom: 15px;
+}
+
+.downloadBox p {
+    color: #8fa1bd;
+
+    line-height: 1.6;
+
+    margin-bottom: 30px;
+}
+
+/* FOOTER */
+
+footer {
+    padding: 35px;
+
+    text-align: center;
+
+    color: #667792;
+
+    border-top:
+        1px solid
+        #ffffff0d;
+}
+
+/* MOBILE */
+
+@media(max-width:700px) {
+
+    nav {
+        padding: 0 20px;
+    }
+
+    nav .links {
+        display: none;
+    }
+
+    section {
+        padding: 80px 20px;
+    }
+
+    h1 {
+        letter-spacing: -3px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAVIGATION -->
+
+<nav>
+
+    <div class="logo">
+
+        <div class="logoIcon">
+            N
+        </div>
+
+        NOVA
+
+    </div>
+
+    <div class="links">
+
+        <a href="#features">
+            Fonctionnalités
+        </a>
+
+        <a href="#demo">
+            Démo
+        </a>
+
+        <a href="#download">
+            Télécharger
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- ACCUEIL -->
+
+<section class="hero">
+
+    <div class="heroContent">
+
+        <div class="heroLogo">
+            N
+        </div>
+
+        <h1>
+            <span class="gradient">
+                NOVA
+            </span>
+        </h1>
+
+        <p>
+
+            Ton assistant personnel,
+            conçu pour évoluer avec toi.
+
+            <br>
+
+            Mémoire, conversation,
+            voix et création réunies
+            dans une seule interface.
+
+        </p>
+
+
+        <div class="buttons">
+
+            <a
+                class="btn primary"
+                href="#download"
+            >
+                🚀 Découvrir NOVA
+            </a>
+
+            <a
+                class="btn secondary"
+                href="#features"
+            >
+                En savoir plus
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FONCTIONNALITES -->
+
+<section id="features">
+
+    <h2 class="sectionTitle">
+        Une NOVA qui évolue
+    </h2>
+
+    <p class="sectionDescription">
+
+        NOVA est pensée comme un assistant
+        personnalisable capable d'évoluer
+        au fil de son développement.
+
+    </p>
+
+
+    <div class="features">
+
+
+        <div class="card">
+
+            <div class="cardIcon">
+                🧠
+            </div>
+
+            <h3>
+                Mémoire
+            </h3>
+
+            <p>
+                NOVA peut mémoriser des
+                informations que tu lui donnes
+                et les utiliser dans ses
+                conversations.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="cardIcon">
+                💬
+            </div>
+
+            <h3>
+                Conversation
+            </h3>
+
+            <p>
+                Une interface simple pour
+                discuter naturellement
+                avec NOVA.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="cardIcon">
+                🔊
+            </div>
+
+            <h3>
+                Voix
+            </h3>
+
+            <p>
+                NOVA peut utiliser la synthèse
+                vocale disponible sur ton
+                appareil.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="cardIcon">
+                🎨
+            </div>
+
+            <h3>
+                Création
+            </h3>
+
+            <p>
+                Une future génération de
+                création d'images et de
+                contenu pourra être intégrée.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="cardIcon">
+                💻
+            </div>
+
+            <h3>
+                Local
+            </h3>
+
+            <p>
+                Le projet est pensé pour
+                pouvoir fonctionner localement
+                sur ton ordinateur.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="cardIcon">
+                ⚡
+            </div>
+
+            <h3>
+                Rapide
+            </h3>
+
+            <p>
+                Une interface légère et
+                réactive conçue pour être
+                agréable à utiliser.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- DEMO -->
+
+<section id="demo">
+
+    <h2 class="sectionTitle">
+        Découvre NOVA
+    </h2>
+
+    <p class="sectionDescription">
+
+        Voici à quoi pourrait ressembler
+        l'interface de conversation.
+
+    </p>
+
+
+    <div class="demo">
+
+        <div class="demoHeader">
+
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+
+            <span style="margin-left:10px">
+                NOVA
+            </span>
+
+        </div>
+
+
+        <div class="demoBody">
+
+            <div class="message nova">
+
+                <strong>
+                    NOVA
+                </strong>
+
+                <br><br>
+
+                Salut Tijl ! 👋
+
+                <br>
+
+                Je suis NOVA.
+
+                <br>
+
+                Prête à fonctionner.
+
+            </div>
+
+
+            <div class="message user">
+
+                <strong>
+                    TOI
+                </strong>
+
+                <br><br>
+
+                Retiens que ma couleur
+                préférée est le bleu.
+
+            </div>
+
+
+            <div class="message nova">
+
+                <strong>
+                    NOVA
+                </strong>
+
+                <br><br>
+
+                Compris ! 🧠
+
+                <br>
+
+                Je retiens que ta couleur
+                préférée est le bleu.
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- TELECHARGEMENT -->
+
+<section
+    id="download"
+    class="downloadSection"
+>
+
+    <div class="downloadBox">
+
+        <h2>
+            NOVA arrive bientôt.
+        </h2>
+
+        <p>
+
+            Cette page constitue le site
+            officiel du projet NOVA.
+
+            <br><br>
+
+            Lorsque l'application Windows
+            sera prête, le bouton ci-dessous
+            pourra devenir le téléchargement
+            officiel de NOVA.
+
+        </p>
+
+
+        <!--
+
+        REMPLACE "#" PAR LE LIEN
+        VERS TON FUTUR NOVA.EXE
+
+        Exemple :
+
+        href="NOVA.exe"
+
+        -->
+
+        <a
+            class="btn primary"
+            href="#"
+            onclick="alert('Le téléchargement de NOVA sera disponible ici lorsque le fichier .exe sera prêt !'); return false;"
+        >
+            ⬇️ Télécharger NOVA
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    © 2026 NOVA
+
+    <br><br>
+
+    Assistant personnel en développement.
+
+</footer>
+
+
+</body>
+</html>
