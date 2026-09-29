@@ -1,842 +1,1267 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>NOVA — Assistant intelligent</title>
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>NOVA</title>
 
 <style>
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+*{
+box-sizing:border-box;
 }
 
-html {
-    scroll-behavior: smooth;
+body{
+margin:0;
+font-family:Arial, sans-serif;
+background:#070b14;
+color:white;
+height:100vh;
+overflow:hidden;
 }
 
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: #050812;
-    color: white;
+/* APPLICATION */
+
+.app{
+display:flex;
+height:100vh;
 }
 
-/* NAVIGATION */
+/* SIDEBAR */
 
-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-
-    height: 70px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 0 7%;
-
-    background: rgba(5,8,18,0.8);
-    backdrop-filter: blur(15px);
-
-    border-bottom: 1px solid #ffffff12;
-
-    z-index: 1000;
+.sidebar{
+width:240px;
+background:#0d1422;
+border-right:1px solid #1c2a40;
+padding:20px;
+display:flex;
+flex-direction:column;
 }
 
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+.logo{
+width:65px;
+height:65px;
 
-    font-size: 23px;
-    font-weight: bold;
+margin:0 auto 10px;
+
+border-radius:20px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+font-size:36px;
+font-weight:bold;
+
+background:linear-gradient(
+135deg,
+#4f8cff,
+#795cff
+);
+
+box-shadow:
+0 0 35px #4f8cff66;
 }
 
-.logoIcon {
-    width: 38px;
-    height: 38px;
-
-    border-radius: 11px;
-
-    display: grid;
-    place-items: center;
-
-    background: linear-gradient(
-        135deg,
-        #4f8cff,
-        #795cff
-    );
-
-    box-shadow:
-        0 0 25px #4f8cff66;
+.name{
+text-align:center;
+font-size:26px;
+font-weight:bold;
 }
 
-nav a {
-    color: #aebbd0;
-    text-decoration: none;
-
-    margin-left: 30px;
-
-    transition: 0.2s;
+.online{
+text-align:center;
+font-size:11px;
+color:#39e59a;
+margin:8px 0 30px;
 }
 
-nav a:hover {
-    color: white;
+.menu{
+background:#162238;
+border:0;
+color:white;
+
+width:100%;
+
+padding:13px;
+
+margin-bottom:8px;
+
+border-radius:12px;
+
+text-align:left;
+
+cursor:pointer;
+
+font-size:14px;
 }
 
-/* HERO */
-
-.hero {
-    min-height: 100vh;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    text-align: center;
-
-    padding: 100px 20px 60px;
-
-    background:
-        radial-gradient(
-            circle at 50% 40%,
-            #244d9b33,
-            transparent 40%
-        );
+.menu:hover{
+background:#213452;
 }
 
-.heroContent {
-    max-width: 900px;
+.bottom{
+margin-top:auto;
+
+font-size:11px;
+
+color:#667895;
+
+text-align:center;
 }
 
-.heroLogo {
-    width: 120px;
-    height: 120px;
+/* CHAT */
 
-    margin: auto auto 30px;
+.main{
+flex:1;
 
-    border-radius: 35px;
+display:flex;
+flex-direction:column;
 
-    display: grid;
-    place-items: center;
-
-    font-size: 65px;
-    font-weight: bold;
-
-    background:
-        linear-gradient(
-            135deg,
-            #4f8cff,
-            #795cff
-        );
-
-    box-shadow:
-        0 0 80px #4f8cff66;
+min-width:0;
 }
 
-h1 {
-    font-size: clamp(55px, 9vw, 100px);
+/* HEADER */
 
-    margin-bottom: 15px;
+.header{
+height:70px;
 
-    letter-spacing: -5px;
+border-bottom:
+1px solid #1c2a40;
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+padding:0 25px;
 }
 
-.gradient {
-    background:
-        linear-gradient(
-            90deg,
-            #6ea0ff,
-            #a278ff
-        );
-
-    -webkit-background-clip: text;
-    color: transparent;
+.headerTitle{
+font-size:20px;
+font-weight:bold;
 }
 
-.hero p {
-    color: #aebbd0;
-
-    font-size: 20px;
-
-    line-height: 1.6;
-
-    max-width: 650px;
-
-    margin: auto;
+.status{
+color:#39e59a;
+font-size:11px;
 }
 
-.buttons {
-    margin-top: 35px;
+/* CHAT */
 
-    display: flex;
+.chat{
+flex:1;
 
-    justify-content: center;
+overflow-y:auto;
 
-    gap: 15px;
-
-    flex-wrap: wrap;
+padding:30px;
 }
 
-.btn {
-    padding: 15px 25px;
+/* MESSAGES */
 
-    border-radius: 12px;
+.message{
+max-width:700px;
 
-    text-decoration: none;
+padding:15px 18px;
 
-    font-weight: bold;
+border-radius:15px;
 
-    transition: 0.2s;
+margin-bottom:15px;
+
+line-height:1.5;
+
+white-space:pre-wrap;
 }
 
-.primary {
-    color: white;
+.nova{
+background:#101b2d;
 
-    background:
-        linear-gradient(
-            135deg,
-            #4f8cff,
-            #765cff
-        );
-
-    box-shadow:
-        0 10px 35px #4f8cff33;
+border:
+1px solid #1e304c;
 }
 
-.secondary {
-    color: white;
+.user{
+background:#18345e;
 
-    background: #131d31;
-
-    border: 1px solid #263653;
+margin-left:auto;
 }
 
-.btn:hover {
-    transform: translateY(-3px);
+.author{
+font-size:10px;
+
+color:#70a1ff;
+
+font-weight:bold;
+
+margin-bottom:6px;
 }
 
-/* SECTIONS */
+/* INPUT */
 
-section {
-    padding: 110px 8%;
+.inputArea{
+padding:15px 25px 25px;
+
+border-top:
+1px solid #1c2a40;
+
+display:flex;
+
+gap:10px;
 }
 
-.sectionTitle {
-    text-align: center;
+.input{
+flex:1;
 
-    font-size: 42px;
+background:#101a2b;
 
-    margin-bottom: 15px;
+border:
+1px solid #293c5c;
+
+border-radius:13px;
+
+padding:15px;
+
+color:white;
+
+font-size:15px;
+
+outline:none;
 }
 
-.sectionDescription {
-    text-align: center;
-
-    color: #8fa1bd;
-
-    max-width: 650px;
-
-    margin: auto auto 60px;
-
-    line-height: 1.6;
+.input:focus{
+border-color:#4f8cff;
 }
 
-/* FEATURES */
+.send{
+background:#4f8cff;
 
-.features {
-    display: grid;
+border:0;
 
-    grid-template-columns:
-        repeat(
-            auto-fit,
-            minmax(220px, 1fr)
-        );
+border-radius:13px;
 
-    gap: 20px;
+padding:0 22px;
 
-    max-width: 1100px;
+color:white;
 
-    margin: auto;
+font-weight:bold;
+
+cursor:pointer;
 }
 
-.card {
-    padding: 28px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #101a2c,
-            #0b1220
-        );
-
-    border: 1px solid #ffffff10;
-
-    border-radius: 20px;
-
-    transition: 0.25s;
+.send:hover{
+background:#669cff;
 }
 
-.card:hover {
-    transform: translateY(-6px);
+/* MODAL */
 
-    border-color: #4f8cff55;
+.modal{
+display:none;
+
+position:fixed;
+
+inset:0;
+
+background:#000b;
+
+align-items:center;
+
+justify-content:center;
+
+padding:20px;
 }
 
-.cardIcon {
-    font-size: 35px;
+.modalBox{
+background:#101827;
 
-    margin-bottom: 18px;
+border:
+1px solid #263653;
+
+border-radius:20px;
+
+padding:25px;
+
+width:min(600px,100%);
+
+max-height:80vh;
+
+overflow:auto;
 }
 
-.card h3 {
-    margin-bottom: 10px;
-}
+.close{
+float:right;
 
-.card p {
-    color: #8fa1bd;
+border:0;
 
-    line-height: 1.6;
-}
+background:#263653;
 
-/* DEMO */
+color:white;
 
-.demo {
-    max-width: 950px;
+padding:8px 12px;
 
-    margin: auto;
+border-radius:8px;
 
-    background: #0d1627;
-
-    border: 1px solid #263653;
-
-    border-radius: 22px;
-
-    overflow: hidden;
-
-    box-shadow:
-        0 30px 100px #0008;
-}
-
-.demoHeader {
-    padding: 15px 20px;
-
-    background: #111d31;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 8px;
-}
-
-.dot {
-    width: 11px;
-    height: 11px;
-
-    border-radius: 50%;
-
-    background: #4f8cff;
-}
-
-.demoBody {
-    padding: 30px;
-
-    min-height: 300px;
-}
-
-.message {
-    max-width: 650px;
-
-    padding: 15px 18px;
-
-    margin-bottom: 15px;
-
-    border-radius: 14px;
-
-    line-height: 1.5;
-}
-
-.nova {
-    background: #16243b;
-}
-
-.user {
-    margin-left: auto;
-
-    background: #1b3762;
-}
-
-/* DOWNLOAD */
-
-.downloadSection {
-    text-align: center;
-
-    background:
-        radial-gradient(
-            circle at center,
-            #21478c22,
-            transparent 60%
-        );
-}
-
-.downloadBox {
-    max-width: 800px;
-
-    margin: auto;
-
-    padding: 60px 30px;
-
-    background: #0d1627;
-
-    border:
-        1px solid
-        #263653;
-
-    border-radius: 25px;
-}
-
-.downloadBox h2 {
-    font-size: 42px;
-
-    margin-bottom: 15px;
-}
-
-.downloadBox p {
-    color: #8fa1bd;
-
-    line-height: 1.6;
-
-    margin-bottom: 30px;
-}
-
-/* FOOTER */
-
-footer {
-    padding: 35px;
-
-    text-align: center;
-
-    color: #667792;
-
-    border-top:
-        1px solid
-        #ffffff0d;
+cursor:pointer;
 }
 
 /* MOBILE */
 
-@media(max-width:700px) {
+@media(max-width:700px){
 
-    nav {
-        padding: 0 20px;
-    }
+.sidebar{
+display:none;
+}
 
-    nav .links {
-        display: none;
-    }
+.chat{
+padding:15px;
+}
 
-    section {
-        padding: 80px 20px;
-    }
+.header{
+padding:0 15px;
+}
 
-    h1 {
-        letter-spacing: -3px;
-    }
+.inputArea{
+padding:10px;
+}
 
 }
 
 </style>
+
 </head>
+
 
 <body>
 
-<!-- NAVIGATION -->
 
-<nav>
+<div class="app">
 
-    <div class="logo">
 
-        <div class="logoIcon">
-            N
-        </div>
+<!-- SIDEBAR -->
 
-        NOVA
+<aside class="sidebar">
 
-    </div>
+<div class="logo">
+N
+</div>
 
-    <div class="links">
+<div class="name">
+NOVA
+</div>
 
-        <a href="#features">
-            Fonctionnalités
-        </a>
+<div class="online">
+● EN LIGNE
+</div>
 
-        <a href="#demo">
-            Démo
-        </a>
 
-        <a href="#download">
-            Télécharger
-        </a>
+<button
+class="menu"
+onclick="focusInput()">
 
-    </div>
+💬 Nouvelle conversation
 
-</nav>
+</button>
 
 
-<!-- ACCUEIL -->
+<button
+class="menu"
+onclick="showMemory()">
 
-<section class="hero">
+🧠 Mémoire
 
-    <div class="heroContent">
+</button>
 
-        <div class="heroLogo">
-            N
-        </div>
 
-        <h1>
-            <span class="gradient">
-                NOVA
-            </span>
-        </h1>
+<button
+class="menu"
+onclick="speakLast()">
 
-        <p>
+🔊 Faire parler NOVA
 
-            Ton assistant personnel,
-            conçu pour évoluer avec toi.
+</button>
 
-            <br>
 
-            Mémoire, conversation,
-            voix et création réunies
-            dans une seule interface.
+<button
+class="menu"
+onclick="showStats()">
 
-        </p>
+📊 Statistiques
 
+</button>
 
-        <div class="buttons">
 
-            <a
-                class="btn primary"
-                href="#download"
-            >
-                🚀 Découvrir NOVA
-            </a>
+<button
+class="menu"
+onclick="showHelp()">
 
-            <a
-                class="btn secondary"
-                href="#features"
-            >
-                En savoir plus
-            </a>
+❔ Aide
 
-        </div>
+</button>
 
-    </div>
 
-</section>
+<div class="bottom">
 
+NOVA Web Edition
 
-<!-- FONCTIONNALITES -->
+<br>
 
-<section id="features">
+Prototype local
 
-    <h2 class="sectionTitle">
-        Une NOVA qui évolue
-    </h2>
+</div>
 
-    <p class="sectionDescription">
+</aside>
 
-        NOVA est pensée comme un assistant
-        personnalisable capable d'évoluer
-        au fil de son développement.
 
-    </p>
+<!-- PRINCIPAL -->
 
+<main class="main">
 
-    <div class="features">
 
+<header class="header">
 
-        <div class="card">
+<div class="headerTitle">
 
-            <div class="cardIcon">
-                🧠
-            </div>
+NOVA
 
-            <h3>
-                Mémoire
-            </h3>
+</div>
 
-            <p>
-                NOVA peut mémoriser des
-                informations que tu lui donnes
-                et les utiliser dans ses
-                conversations.
-            </p>
+<div class="status">
 
-        </div>
+● SYSTÈME ACTIF
 
+</div>
 
-        <div class="card">
+</header>
 
-            <div class="cardIcon">
-                💬
-            </div>
 
-            <h3>
-                Conversation
-            </h3>
-
-            <p>
-                Une interface simple pour
-                discuter naturellement
-                avec NOVA.
-            </p>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="cardIcon">
-                🔊
-            </div>
-
-            <h3>
-                Voix
-            </h3>
-
-            <p>
-                NOVA peut utiliser la synthèse
-                vocale disponible sur ton
-                appareil.
-            </p>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="cardIcon">
-                🎨
-            </div>
-
-            <h3>
-                Création
-            </h3>
-
-            <p>
-                Une future génération de
-                création d'images et de
-                contenu pourra être intégrée.
-            </p>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="cardIcon">
-                💻
-            </div>
-
-            <h3>
-                Local
-            </h3>
-
-            <p>
-                Le projet est pensé pour
-                pouvoir fonctionner localement
-                sur ton ordinateur.
-            </p>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="cardIcon">
-                ⚡
-            </div>
-
-            <h3>
-                Rapide
-            </h3>
-
-            <p>
-                Une interface légère et
-                réactive conçue pour être
-                agréable à utiliser.
-            </p>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- DEMO -->
-
-<section id="demo">
-
-    <h2 class="sectionTitle">
-        Découvre NOVA
-    </h2>
-
-    <p class="sectionDescription">
-
-        Voici à quoi pourrait ressembler
-        l'interface de conversation.
-
-    </p>
-
-
-    <div class="demo">
-
-        <div class="demoHeader">
-
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-
-            <span style="margin-left:10px">
-                NOVA
-            </span>
-
-        </div>
-
-
-        <div class="demoBody">
-
-            <div class="message nova">
-
-                <strong>
-                    NOVA
-                </strong>
-
-                <br><br>
-
-                Salut Tijl ! 👋
-
-                <br>
-
-                Je suis NOVA.
-
-                <br>
-
-                Prête à fonctionner.
-
-            </div>
-
-
-            <div class="message user">
-
-                <strong>
-                    TOI
-                </strong>
-
-                <br><br>
-
-                Retiens que ma couleur
-                préférée est le bleu.
-
-            </div>
-
-
-            <div class="message nova">
-
-                <strong>
-                    NOVA
-                </strong>
-
-                <br><br>
-
-                Compris ! 🧠
-
-                <br>
-
-                Je retiens que ta couleur
-                préférée est le bleu.
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- TELECHARGEMENT -->
+<!-- CHAT -->
 
 <section
-    id="download"
-    class="downloadSection"
->
-
-    <div class="downloadBox">
-
-        <h2>
-            NOVA arrive bientôt.
-        </h2>
-
-        <p>
-
-            Cette page constitue le site
-            officiel du projet NOVA.
-
-            <br><br>
-
-            Lorsque l'application Windows
-            sera prête, le bouton ci-dessous
-            pourra devenir le téléchargement
-            officiel de NOVA.
-
-        </p>
-
-
-        <!--
-
-        REMPLACE "#" PAR LE LIEN
-        VERS TON FUTUR NOVA.EXE
-
-        Exemple :
-
-        href="NOVA.exe"
-
-        -->
-
-        <a
-            class="btn primary"
-            href="#"
-            onclick="alert('Le téléchargement de NOVA sera disponible ici lorsque le fichier .exe sera prêt !'); return false;"
-        >
-            ⬇️ Télécharger NOVA
-        </a>
-
-    </div>
+id="chat"
+class="chat">
 
 </section>
 
 
-<!-- FOOTER -->
+<!-- INPUT -->
 
-<footer>
+<div class="inputArea">
 
-    © 2026 NOVA
+<input
+id="input"
+class="input"
+placeholder="Écris quelque chose à NOVA..."
+autocomplete="off"
+>
 
-    <br><br>
+<button
+class="send"
+onclick="sendMessage()">
 
-    Assistant personnel en développement.
+➤
 
-</footer>
+</button>
 
+</div>
+
+
+</main>
+
+</div>
+
+
+<!-- MODAL -->
+
+<div
+id="modal"
+class="modal">
+
+<div
+id="modalBox"
+class="modalBox">
+
+</div>
+
+</div>
+
+
+<script>
+
+
+/* =========================
+MEMOIRE
+========================= */
+
+let memory =
+JSON.parse(
+localStorage.getItem(
+"NOVA_MEMORY"
+) || "{}"
+);
+
+
+let history =
+JSON.parse(
+localStorage.getItem(
+"NOVA_HISTORY"
+) || "[]"
+);
+
+
+let lastAnswer = "";
+
+
+/* =========================
+OUTILS
+========================= */
+
+function save(){
+
+localStorage.setItem(
+"NOVA_MEMORY",
+JSON.stringify(memory)
+);
+
+localStorage.setItem(
+"NOVA_HISTORY",
+JSON.stringify(history)
+);
+
+}
+
+
+function normalize(text){
+
+return text
+.toLowerCase()
+.normalize("NFD")
+.replace(
+/[\u0300-\u036f]/g,
+""
+)
+.trim();
+
+}
+
+
+function focusInput(){
+
+document
+.getElementById("input")
+.focus();
+
+}
+
+
+/* =========================
+MESSAGE
+========================= */
+
+function addMessage(
+author,
+text
+){
+
+const chat =
+document.getElementById(
+"chat"
+);
+
+
+const div =
+document.createElement(
+"div"
+);
+
+
+div.className =
+"message " +
+(
+author === "NOVA"
+? "nova"
+: "user"
+);
+
+
+div.innerHTML =
+
+"<div class='author'>" +
+
+author +
+
+"</div>" +
+
+text
+.replace(
+/</g,
+"&lt;"
+)
+.replace(
+/>/g,
+"&gt;"
+)
+.replace(
+/\n/g,
+"<br>"
+);
+
+
+chat.appendChild(
+div
+);
+
+
+chat.scrollTop =
+chat.scrollHeight;
+
+}
+
+
+/* =========================
+CERVEAU
+========================= */
+
+function novaAnswer(question){
+
+const q =
+normalize(question);
+
+
+/* SALUT */
+
+if(
+q === "salut" ||
+q === "bonjour" ||
+q === "coucou" ||
+q === "hello"
+){
+
+return `
+Salut Tijl ! 👋
+
+Je suis NOVA.
+
+Je suis prête à discuter avec toi.
+`;
+
+}
+
+
+/* NOM */
+
+if(
+q.includes("ton nom") ||
+q.includes("comment tu t'appelles")
+){
+
+return `
+Je m'appelle NOVA. 🧠
+`;
+
+}
+
+
+/* =========================
+MEMORISATION
+========================= */
+
+let remember =
+q.match(
+/^(retiens que|souviens toi que|memorise que)\s+(.+?)\s*=\s*(.+)$/
+);
+
+
+if(remember){
+
+let key =
+remember[2].trim();
+
+let value =
+remember[3].trim();
+
+
+memory[key] =
+value;
+
+
+save();
+
+
+return `
+Compris ! 🧠
+
+Je retiens :
+
+${key} = ${value}
+`;
+
+}
+
+
+/* =========================
+MEMOIRE
+========================= */
+
+if(
+q.includes("qu'est ce que tu sais") ||
+q.includes("que sais tu de moi") ||
+q === "memoire"
+){
+
+let keys =
+Object.keys(memory);
+
+
+if(keys.length === 0){
+
+return `
+Ma mémoire est actuellement vide.
+`;
+
+}
+
+
+return `
+🧠 Voici ce que je retiens :
+
+` +
+
+keys
+.map(
+key =>
+"• " +
+key +
+" = " +
+memory[key]
+)
+.join("\n");
+
+}
+
+
+/* =========================
+OUBLI
+========================= */
+
+if(
+q.startsWith("oublie ")
+){
+
+let key =
+q.substring(7)
+.trim();
+
+
+if(
+memory[key] !== undefined
+){
+
+delete memory[key];
+
+save();
+
+
+return `
+C'est oublié. 🧠
+`;
+
+}
+
+
+return `
+Je n'ai pas trouvé ce souvenir.
+`;
+
+}
+
+
+/* =========================
+HEURE
+========================= */
+
+if(
+q.includes("quelle heure")
+){
+
+return `
+Il est actuellement :
+
+${new Date().toLocaleTimeString(
+"fr-FR"
+)}
+`;
+
+}
+
+
+/* =========================
+DATE
+========================= */
+
+if(
+q.includes("quelle date")
+){
+
+return `
+Nous sommes le :
+
+${new Date().toLocaleDateString(
+"fr-FR"
+)}
+`;
+
+}
+
+
+/* =========================
+CALCUL
+========================= */
+
+let expression =
+q
+.replace(
+"calcule ",
+""
+)
+.replace(
+"combien font ",
+""
+);
+
+
+if(
+/^[0-9+\-*/(). ]+$/.test(
+expression
+)
+&&
+/[0-9]/.test(expression)
+){
+
+try{
+
+let result =
+Function(
+'"use strict";return (' +
+expression +
+')'
+)();
+
+
+return `
+🧮 Résultat :
+
+${result}
+`;
+
+}
+
+catch(e){}
+
+}
+
+
+/* =========================
+CONNAISSANCES
+========================= */
+
+if(
+q.includes("union europeenne")
+){
+
+return `
+L'Union européenne est une organisation politique et économique qui regroupe plusieurs États européens.
+
+Elle possède notamment un marché intérieur commun et des institutions communes.
+`;
+
+}
+
+
+if(
+q.includes("gravite")
+){
+
+return `
+La gravité est une interaction physique qui attire les corps ayant une masse les uns vers les autres.
+`;
+
+}
+
+
+if(
+q.includes("python")
+){
+
+return `
+Python est un langage de programmation très utilisé, notamment pour le développement logiciel, l'automatisation et l'intelligence artificielle.
+`;
+
+}
+
+
+/* =========================
+REPONSE PAR DEFAUT
+========================= */
+
+return `
+Je ne connais pas encore cette réponse.
+
+Tu peux m'apprendre quelque chose avec :
+
+« Retiens que couleur préférée = bleu »
+
+🧠
+`;
+
+}
+
+
+/* =========================
+ENVOYER
+========================= */
+
+function sendMessage(){
+
+const input =
+document.getElementById(
+"input"
+);
+
+
+const question =
+input.value.trim();
+
+
+if(!question)
+return;
+
+
+input.value = "";
+
+
+addMessage(
+"TOI",
+question
+);
+
+
+const answer =
+novaAnswer(
+question
+);
+
+
+addMessage(
+"NOVA",
+answer
+);
+
+
+lastAnswer =
+answer;
+
+
+history.push({
+
+question:
+question,
+
+answer:
+answer,
+
+date:
+new Date().toISOString()
+
+});
+
+
+save();
+
+}
+
+
+/* =========================
+ENTREE
+========================= */
+
+document
+.getElementById("input")
+.addEventListener(
+"keydown",
+function(event){
+
+if(
+event.key === "Enter"
+){
+
+sendMessage();
+
+}
+
+}
+);
+
+
+/* =========================
+MEMOIRE
+========================= */
+
+function showMemory(){
+
+let keys =
+Object.keys(memory);
+
+
+let html =
+`
+<button class="close"
+onclick="closeModal()">
+X
+</button>
+
+<h2>🧠 Mémoire de NOVA</h2>
+`;
+
+
+if(keys.length === 0){
+
+html +=
+"<p>Ma mémoire est vide.</p>";
+
+}
+
+else{
+
+keys.forEach(
+function(key){
+
+html +=
+
+"<p>• <b>" +
+key +
+"</b> = " +
+memory[key] +
+"</p>";
+
+}
+
+);
+
+}
+
+
+openModal(
+html
+);
+
+}
+
+
+/* =========================
+STATS
+========================= */
+
+function showStats(){
+
+openModal(`
+
+<button class="close"
+onclick="closeModal()">
+X
+</button>
+
+<h2>📊 Statistiques</h2>
+
+<p>
+Souvenirs :
+${Object.keys(memory).length}
+</p>
+
+<p>
+Messages :
+${history.length}
+</p>
+
+<p>
+Stockage :
+Navigateur local
+</p>
+
+`);
+
+}
+
+
+/* =========================
+AIDE
+========================= */
+
+function showHelp(){
+
+openModal(`
+
+<button class="close"
+onclick="closeModal()">
+X
+</button>
+
+<h2>❔ Comment utiliser NOVA ?</h2>
+
+<p>
+Tu peux discuter normalement.
+</p>
+
+<p>
+🧠 Pour apprendre :
+</p>
+
+<p>
+<b>
+Retiens que couleur préférée = bleu
+</b>
+</p>
+
+<p>
+🧠 Pour consulter sa mémoire :
+</p>
+
+<p>
+<b>
+Qu'est-ce que tu sais de moi ?
+</b>
+</p>
+
+<p>
+🧠 Pour oublier :
+</p>
+
+<p>
+<b>
+Oublie couleur préférée
+</b>
+</p>
+
+<p>
+🧮 Pour calculer :
+</p>
+
+<p>
+<b>
+Calcule 25*4
+</b>
+</p>
+
+`);
+
+}
+
+
+/* =========================
+VOIX
+========================= */
+
+function speakLast(){
+
+if(!lastAnswer)
+return;
+
+
+speechSynthesis.cancel();
+
+
+let voice =
+new SpeechSynthesisUtterance(
+lastAnswer
+);
+
+
+voice.lang =
+"fr-FR";
+
+
+voice.rate =
+1;
+
+
+speechSynthesis.speak(
+voice
+);
+
+}
+
+
+/* =========================
+MODAL
+========================= */
+
+function openModal(
+content
+){
+
+document
+.getElementById(
+"modalBox"
+)
+.innerHTML =
+content;
+
+
+document
+.getElementById(
+"modal"
+)
+.style.display =
+"flex";
+
+}
+
+
+function closeModal(){
+
+document
+.getElementById(
+"modal"
+)
+.style.display =
+"none";
+
+}
+
+
+/* =========================
+MESSAGE DE DEPART
+========================= */
+
+addMessage(
+"NOVA",
+
+`Salut Tijl ! 👋
+
+Je suis NOVA.
+
+🧠 Ma mémoire est activée.
+💬 Tu peux me parler.
+🔊 Je peux parler à voix haute.
+🧮 Je peux effectuer des calculs.
+
+Essaie :
+
+« Retiens que couleur préférée = bleu »
+
+Puis :
+
+« Qu'est-ce que tu sais de moi ? »
+`
+
+);
+
+</script>
 
 </body>
+
 </html>
